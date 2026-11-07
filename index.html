@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Ads — Manager</title>
+    <link rel="icon" href="logo.jpg">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <img src="logo.jpg" alt="Nova Ads" class="logo-img">
+            <h1 class="brand">Nova Ads</h1>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-page="dashboard"><span class="nav-icon">📊</span> Dashboard</a>
+            <a href="#" class="nav-item" data-page="sales"><span class="nav-icon">🛒</span> Sales</a>
+            <a href="#" class="nav-item" data-page="other-income"><span class="nav-icon">💼</span> Other Income</a>
+            <a href="#" class="nav-item" data-page="expenses"><span class="nav-icon">💸</span> Expenses</a>
+            <a href="#" class="nav-item" data-page="daily-log"><span class="nav-icon">📝</span> Daily Log</a>
+            <a href="#" class="nav-item" data-page="reminders"><span class="nav-icon">⏰</span> Reminders</a>
+            <a href="#" class="nav-item" data-page="planner"><span class="nav-icon">📅</span> Planner</a>
+            <a href="#" class="nav-item" data-page="reports"><span class="nav-icon">📈</span> Reports</a>
+            <a href="#" class="nav-item" data-page="inventory"><span class="nav-icon">📦</span> Inventory</a>
+            <a href="#" class="nav-item" data-page="settings"><span class="nav-icon">⚙️</span> Settings</a>
+        </nav>
+    </aside>
+
+    <!-- Mobile Sidebar Toggle -->
+    <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle Menu">☰</button>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <h2 id="page-title" class="page-title">Dashboard</h2>
+            <div class="top-bar-right">
+                <span id="current-date" class="current-date"></span>
+                <button id="notification-bell" class="notification-bell" aria-label="Notifications">
+                    🔔 <span id="notification-badge" class="badge hidden">0</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ===== DASHBOARD ===== -->
+        <section id="page-dashboard" class="page active">
+            <div class="stats-grid">
+                <div class="stat-card stat-sales-card">
+                    <div class="stat-icon">🛒</div>
+                    <div class="stat-info">
+                        <span class="stat-label">Workshop Sales</span>
+                        <span id="stat-sales" class="stat-value">$0.00</span>
+                    </div>
+                </div>
+                <div class="stat-card stat-other-income-card">
+                    <div class="stat-icon">💼</div>
+                    <div class="stat-info">
+                        <span class="stat-label">Other Income</span>
+                        <span id="stat-other-income" class="stat-value">$0.00</span>
+                    </div>
+                </div>
+                <div class="stat-card stat-costs-card">
+                    <div class="stat-icon">💸</div>
+                    <div class="stat-info">
+                        <span class="stat-label">Today's Costs</span>
+                        <span id="stat-costs" class="stat-value">$0.00</span>
+                    </div>
+                </div>
+                <div class="stat-card stat-profit-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <span class="stat-label">Today's Net Profit</span>
+                        <span id="stat-profit" class="stat-value">$0.00</span>
+                    </div>
+                </div>
+                <div class="stat-card stat-workshop-profit-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-info">
+                        <span class="stat-label">Workshop Profit</span>
+                        <span id="stat-workshop-profit" class="stat-value">$0.00</span>
+                        <span class="stat-sub" id="stat-workshop-sub"></span>
+                    </div>
+                </div>
+                <div class="stat-card stat-reminders-card">
+                    <div class="stat-icon">⏰</div>
+                    <div class="stat-info">
+                        <span class="stat-label">Pending Reminders</span>
+                        <span id="stat-reminders" class="stat-value">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-actions">
+                <button class="btn btn-primary quick-btn" data-goto="sales">+ Add Sale</button>
+                <button class="btn btn-danger quick-btn" data-goto="expenses">+ Add Expense</button>
+                <button class="btn btn-secondary quick-btn" data-goto="daily-log">✏️ Write Log</button>
+            </div>
+            <div class="chart-container">
+                <h3>Last 7 Days — Income vs Costs</h3>
+                <canvas id="dashboard-chart"></canvas>
+            </div>
+            <div class="dashboard-columns">
+                <div class="dashboard-col">
+                    <h3>Recent Sales</h3>
+                    <div id="recent-sales-list" class="list-container"><p class="empty-msg">No sales recorded today.</p></div>
+                </div>
+                <div class="dashboard-col">
+                    <h3>Upcoming Reminders</h3>
+                    <div id="upcoming-reminders-list" class="list-container"><p class="empty-msg">No upcoming reminders.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SALES ===== -->
+        <section id="page-sales" class="page">
+            <div class="page-header">
+                <h3>Sales Register</h3>
+                <input type="date" id="sales-date" class="date-picker">
+            </div>
+            <form id="sales-form" class="entry-form" autocomplete="off">
+                <div class="form-row">
+                    <div class="form-group"><label for="sale-product">Product / Service</label><input type="text" id="sale-product" placeholder="e.g. Custom shelf" required></div>
+                    <div class="form-group"><label for="sale-category">Category</label>
+                        <select id="sale-category"><option>General</option><option>Repairs</option><option>Custom Work</option><option>Parts</option><option>Services</option><option>Other</option></select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="sale-qty">Quantity</label><input type="number" id="sale-qty" min="1" value="1" required></div>
+                    <div class="form-group"><label for="sale-price">Unit Price</label><input type="number" id="sale-price" min="0" step="0.01" placeholder="0.00" required></div>
+                    <div class="form-group"><label>Total</label><span id="sale-total" class="computed-total">$0.00</span></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group full-width"><label for="sale-notes">Notes</label><input type="text" id="sale-notes" placeholder="Optional notes..."></div>
+                </div>
+                <button type="submit" id="btn-add-sale" class="btn btn-primary">+ Add Sale</button>
+            </form>
+            <div class="table-wrapper">
+                <table id="sales-table" class="data-table"><thead><tr><th>Product</th><th>Category</th><th>Qty</th><th>Price</th><th>Total</th><th>Notes</th><th>Actions</th></tr></thead><tbody></tbody></table>
+            </div>
+            <div class="summary-bar"><strong>Total Sales: <span id="sales-day-total">$0.00</span></strong></div>
+        </section>
+
+        <!-- ===== OTHER INCOME ===== -->
+        <section id="page-other-income" class="page">
+            <div class="page-header">
+                <h3>Other Income</h3>
+                <input type="date" id="other-income-date" class="date-picker">
+            </div>
+            <form id="other-income-form" class="entry-form" autocomplete="off">
+                <div class="form-row">
+                    <div class="form-group"><label for="oi-desc">Description</label><input type="text" id="oi-desc" placeholder="e.g. Monthly salary, Freelance payment..." required></div>
+                    <div class="form-group"><label for="oi-category">Category</label>
+                        <select id="oi-category"><option>Salary</option><option>Freelance</option><option>Investment</option><option>Rental</option><option>Side Business</option><option>Transfer</option><option>Other</option></select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="oi-amount">Amount</label><input type="number" id="oi-amount" min="0" step="0.01" placeholder="0.00" required></div>
+                    <div class="form-group full-width"><label for="oi-notes">Notes</label><input type="text" id="oi-notes" placeholder="Optional notes..."></div>
+                </div>
+                <button type="submit" id="btn-add-oi" class="btn btn-primary" style="background:#7b2cbf;">+ Add Income</button>
+            </form>
+            <div class="table-wrapper">
+                <table id="other-income-table" class="data-table"><thead><tr><th>Description</th><th>Category</th><th>Amount</th><th>Notes</th><th>Actions</th></tr></thead><tbody></tbody></table>
+            </div>
+            <div class="summary-bar" style="background:var(--blue-bg);color:var(--purple);"><strong>Total Other Income: <span id="oi-day-total">$0.00</span></strong></div>
+        </section>
+
+        <!-- ===== EXPENSES ===== -->
+        <section id="page-expenses" class="page">
+            <div class="page-header">
+                <h3>Expenses Tracker</h3>
+                <input type="date" id="expenses-date" class="date-picker">
+            </div>
+            <form id="expenses-form" class="entry-form" autocomplete="off">
+                <div class="form-row">
+                    <div class="form-group"><label for="expense-desc">Description</label><input type="text" id="expense-desc" placeholder="e.g. Plywood sheets" required></div>
+                    <div class="form-group"><label for="expense-category">Category</label>
+                        <select id="expense-category"><option>Materials</option><option>Tools</option><option>Utilities</option><option>Rent</option><option>Labor</option><option>Transportation</option><option>Maintenance</option><option>Other</option></select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="expense-amount">Amount</label><input type="number" id="expense-amount" min="0" step="0.01" placeholder="0.00" required></div>
+                    <div class="form-group"><label for="expense-source">Paid From</label>
+                        <select id="expense-source"><option value="Workshop">🛒 Workshop Sales</option><option value="Other Income">💼 Other Income</option></select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group full-width"><label for="expense-notes">Notes</label><input type="text" id="expense-notes" placeholder="Optional notes..."></div>
+                </div>
+                <button type="submit" id="btn-add-expense" class="btn btn-danger">+ Add Expense</button>
+            </form>
+            <div class="table-wrapper">
+                <table id="expenses-table" class="data-table"><thead><tr><th>Description</th><th>Category</th><th>Amount</th><th>Paid From</th><th>Notes</th><th>Actions</th></tr></thead><tbody></tbody></table>
+            </div>
+            <div class="summary-bar summary-expense"><strong>Total Expenses: <span id="expenses-day-total">$0.00</span></strong></div>
+        </section>
+
+        <!-- ===== DAILY LOG ===== -->
+        <section id="page-daily-log" class="page">
+            <div class="page-header">
+                <h3>Daily Activity Log</h3>
+                <input type="date" id="log-date" class="date-picker">
+            </div>
+            <div class="log-editor">
+                <textarea id="log-text" placeholder="What did you do today? Write about your work, progress, challenges..."></textarea>
+                <button id="btn-save-log" class="btn btn-primary">💾 Save Log</button>
+            </div>
+            <div class="past-logs-section">
+                <h3>Recent Logs</h3>
+                <div id="past-logs" class="past-logs"></div>
+            </div>
+        </section>
+
+        <!-- ===== REMINDERS ===== -->
+        <section id="page-reminders" class="page">
+            <h3>Reminders</h3>
+            <form id="reminder-form" class="entry-form" autocomplete="off">
+                <div class="form-row">
+                    <div class="form-group"><label for="reminder-title">Title</label><input type="text" id="reminder-title" placeholder="e.g. Order wood supply" required></div>
+                    <div class="form-group"><label for="reminder-priority">Priority</label>
+                        <select id="reminder-priority"><option value="Low">🟢 Low</option><option value="Medium" selected>🟡 Medium</option><option value="High">🔴 High</option></select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="reminder-date">Date</label><input type="date" id="reminder-date" required></div>
+                    <div class="form-group"><label for="reminder-time">Time</label><input type="time" id="reminder-time"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group full-width"><label for="reminder-desc">Description</label><input type="text" id="reminder-desc" placeholder="Optional details..."></div>
+                </div>
+                <button type="submit" id="btn-add-reminder" class="btn btn-primary">+ Add Reminder</button>
+            </form>
+            <div class="reminder-tabs">
+                <button class="tab-btn active" data-tab="active">Active</button>
+                <button class="tab-btn" data-tab="completed">Completed</button>
+            </div>
+            <div id="reminders-list" class="reminders-list"></div>
+        </section>
+
+        <!-- ===== PLANNER ===== -->
+        <section id="page-planner" class="page">
+            <div class="planner-header">
+                <button id="prev-month" class="btn btn-sm">◀</button>
+                <h3 id="planner-month-year">November 2026</h3>
+                <button id="next-month" class="btn btn-sm">▶</button>
+            </div>
+            <div id="planner-calendar" class="planner-calendar">
+                <div class="cal-header">Sun</div><div class="cal-header">Mon</div><div class="cal-header">Tue</div><div class="cal-header">Wed</div><div class="cal-header">Thu</div><div class="cal-header">Fri</div><div class="cal-header">Sat</div>
+            </div>
+            <div id="day-plan-panel" class="day-plan-panel hidden">
+                <div class="day-plan-header">
+                    <h4 id="day-plan-date">Nov 5, 2026</h4>
+                    <button id="close-day-panel" class="btn btn-sm">✕</button>
+                </div>
+                <div id="day-plan-tasks" class="day-plan-tasks"></div>
+                <form id="day-plan-form" class="day-plan-form" autocomplete="off">
+                    <input type="text" id="plan-task-desc" placeholder="New task..." required>
+                    <input type="time" id="plan-task-time">
+                    <button type="submit" class="btn btn-primary btn-sm">Add</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ===== INVENTORY ===== -->
+        <section id="page-inventory" class="page">
+            <h3>Inventory</h3>
+            <form id="inventory-form" class="entry-form" autocomplete="off">
+                <div class="form-row">
+                    <div class="form-group"><label for="inv-name">Item Name</label><input type="text" id="inv-name" placeholder="e.g. Pine wood boards" required></div>
+                    <div class="form-group"><label for="inv-category">Category</label>
+                        <select id="inv-category"><option>Raw Materials</option><option>Tools</option><option>Finished Products</option><option>Supplies</option><option>Other</option></select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="inv-qty">Quantity</label><input type="number" id="inv-qty" min="0" value="0" required></div>
+                    <div class="form-group"><label for="inv-unit">Unit</label><input type="text" id="inv-unit" placeholder="pcs, kg, m..."></div>
+                    <div class="form-group"><label for="inv-min-stock">Min Stock</label><input type="number" id="inv-min-stock" min="0" value="0"></div>
+                    <div class="form-group"><label for="inv-cost">Cost/Unit</label><input type="number" id="inv-cost" min="0" step="0.01" placeholder="0.00"></div>
+                </div>
+                <button type="submit" id="btn-add-inventory" class="btn btn-primary">+ Add Item</button>
+            </form>
+            <div class="search-bar"><input type="text" id="inv-search" placeholder="🔍 Search inventory..."></div>
+            <div class="table-wrapper">
+                <table id="inventory-table" class="data-table"><thead><tr><th>Item</th><th>Category</th><th>Qty</th><th>Unit</th><th>Min Stock</th><th>Cost/Unit</th><th>Status</th><th>Actions</th></tr></thead><tbody></tbody></table>
+            </div>
+        </section>
+
+        <!-- ===== REPORTS ===== -->
+        <section id="page-reports" class="page">
+            <h3>Reports & Analytics</h3>
+            <div class="report-filters">
+                <div class="date-range">
+                    <label>From</label><input type="date" id="report-from">
+                    <label>To</label><input type="date" id="report-to">
+                    <button id="btn-generate-report" class="btn btn-primary">Generate</button>
+                </div>
+                <div class="quick-filters">
+                    <button class="btn btn-sm btn-outline" data-range="week">This Week</button>
+                    <button class="btn btn-sm btn-outline" data-range="month">This Month</button>
+                    <button class="btn btn-sm btn-outline" data-range="last-month">Last Month</button>
+                    <button class="btn btn-sm btn-outline" data-range="year">This Year</button>
+                </div>
+            </div>
+            <div class="report-summary">
+                <div class="report-stat"><span class="report-stat-label">Total Income</span><span id="report-total-income" class="report-stat-value income">$0.00</span></div>
+                <div class="report-stat"><span class="report-stat-label">Total Expenses</span><span id="report-total-expenses" class="report-stat-value expense">$0.00</span></div>
+                <div class="report-stat"><span class="report-stat-label">Net Profit</span><span id="report-net-profit" class="report-stat-value profit">$0.00</span></div>
+                <div class="report-stat"><span class="report-stat-label">Avg Daily Profit</span><span id="report-avg-profit" class="report-stat-value">$0.00</span></div>
+            </div>
+            <div class="charts-grid">
+                <div class="chart-box"><h4>Income vs Expenses</h4><canvas id="report-income-expenses"></canvas></div>
+                <div class="chart-box"><h4>Profit Trend</h4><canvas id="report-profit-trend"></canvas></div>
+                <div class="chart-box"><h4>Sales by Category</h4><canvas id="report-sales-category"></canvas></div>
+                <div class="chart-box"><h4>Expenses by Category</h4><canvas id="report-expenses-category"></canvas></div>
+            </div>
+            <button id="btn-export-csv" class="btn btn-secondary">📥 Export to CSV</button>
+        </section>
+
+        <!-- ===== SETTINGS ===== -->
+        <section id="page-settings" class="page">
+            <h3>Settings</h3>
+            <div class="settings-section">
+                <h4>Workshop Info</h4>
+                <div class="form-group"><label for="setting-workshop-name">Workshop Name</label><input type="text" id="setting-workshop-name" placeholder="My Workshop"></div>
+                <div class="form-group"><label for="setting-currency">Currency Symbol</label><input type="text" id="setting-currency" placeholder="$" maxlength="5"></div>
+            </div>
+            <div class="settings-section">
+                <h4>Appearance</h4>
+                <div class="form-group toggle-group">
+                    <label>Dark Mode</label>
+                    <label class="switch"><input type="checkbox" id="setting-dark-mode"><span class="slider"></span></label>
+                </div>
+            </div>
+            <div class="settings-section">
+                <h4>Data Management</h4>
+                <div class="settings-actions">
+                    <button id="btn-export-data" class="btn btn-secondary">📤 Export All Data (Backup)</button>
+                    <label class="btn btn-secondary file-input-label">📥 Import Data (Restore)<input type="file" id="import-data" accept=".json" hidden></label>
+                    <button id="btn-clear-data" class="btn btn-danger">🗑️ Clear All Data</button>
+                </div>
+            </div>
+            <div class="settings-section"><p class="app-info">Nova Ads Manager v1.0 — Advertising that makes you shine ✨</p></div>
+        </section>
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Modal -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal">
+            <div class="modal-header"><h3 id="modal-title">Modal</h3><button id="modal-close" class="modal-close">✕</button></div>
+            <div id="modal-body" class="modal-body"></div>
+            <div id="modal-footer" class="modal-footer"></div>
+        </div>
+    </div>
+
+    <!-- Reminder Alert -->
+    <div id="reminder-alert" class="reminder-alert hidden">
+        <div class="reminder-alert-content">
+            <span class="reminder-alert-icon">🔔</span>
+            <h3 id="reminder-alert-title">Reminder!</h3>
+            <p id="reminder-alert-desc"></p>
+            <button id="reminder-alert-dismiss" class="btn btn-primary">Got it!</button>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

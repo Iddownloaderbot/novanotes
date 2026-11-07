@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact & Order — Nova Advert | Ambo</title>
+  <meta name="description" content="Contact Nova Advert to place your order. Call us, message on Telegram, or fill out our order form. Located in Ambo near Ambo University.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ====== NAVIGATION ====== -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon">N</div>
+        <h1>Nova <span>Advert</span></h1>
+      </a>
+      <div class="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="tel:+251966637496" class="nav-cta">📞 Call Now</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ====== PAGE BANNER ====== -->
+  <section class="page-banner">
+    <div class="container">
+      <h2>Contact & Order</h2>
+      <p>Get in touch with us or place your order today</p>
+    </div>
+  </section>
+
+  <!-- ====== CONTACT SECTION ====== -->
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Contact Info -->
+        <div class="contact-info-cards">
+          <div class="section-header" style="text-align: left; margin-bottom: 30px;">
+            <h2 style="font-size: 1.8rem;">Get In Touch</h2>
+            <p style="margin: 0;">We're here to help! Reach out to us through any of these channels.</p>
+          </div>
+
+          <!-- Phone Card -->
+          <a href="tel:+251966637496" class="contact-card">
+            <div class="icon-box phone">📞</div>
+            <div class="info">
+              <h4>Phone Call</h4>
+              <p>Call us directly for quick service</p>
+              <span style="color: #28a745; font-weight: 600;">0966637496</span>
+            </div>
+          </a>
+
+          <!-- Telegram Card -->
+          <a href="https://t.me/novaprintambo" target="_blank" class="contact-card">
+            <div class="icon-box telegram">✈️</div>
+            <div class="info">
+              <h4>Telegram</h4>
+              <p>Chat with us on Telegram</p>
+              <span style="color: #0088cc; font-weight: 600;">@novaprintambo</span>
+            </div>
+          </a>
+
+          <!-- Location Card -->
+          <div class="contact-card">
+            <div class="icon-box location">📍</div>
+            <div class="info">
+              <h4>Our Location</h4>
+              <p>Visit our shop in person</p>
+              <span style="color: var(--accent); font-weight: 600;">Ambo, near Ambo University Main Campus</span>
+            </div>
+          </div>
+
+          <!-- Working Hours Card -->
+          <div class="contact-card">
+            <div class="icon-box" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">🕐</div>
+            <div class="info">
+              <h4>Working Hours</h4>
+              <p>Monday — Saturday</p>
+              <span style="color: var(--secondary); font-weight: 600;">8:00 AM — 6:00 PM</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Form -->
+        <div class="order-form">
+          <h3>📝 Place Your Order</h3>
+          <p style="color: var(--text-medium); margin-bottom: 25px; font-size: 0.95rem;">
+            Fill out the form below and we'll get back to you on Telegram with pricing and details.
+          </p>
+
+          <form id="orderForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="customerName">Your Name *</label>
+                <input type="text" id="customerName" placeholder="Enter your full name" required>
+              </div>
+              <div class="form-group">
+                <label for="customerPhone">Phone Number *</label>
+                <input type="tel" id="customerPhone" placeholder="e.g. 0912345678" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="productSelect">Select Product / Service *</label>
+              <select id="productSelect" required>
+                <option value="" disabled selected>— Choose a product —</option>
+                <optgroup label="Printing & Advertising">
+                  <option value="Banners">Banners</option>
+                  <option value="Stickers">Stickers</option>
+                  <option value="Postcards">Postcards</option>
+                  <option value="Business Cards">Business Cards</option>
+                  <option value="Certificates">Certificates</option>
+                </optgroup>
+                <optgroup label="Invitation Cards">
+                  <option value="Wedding Invitation Cards">Wedding Invitation Cards</option>
+                  <option value="Sport Invitation Cards">Sport Invitation Cards</option>
+                  <option value="Graduation Invitation Cards">Graduation Invitation Cards</option>
+                  <option value="Funeral Program Cards">Funeral Program Cards</option>
+                </optgroup>
+                <optgroup label="Stationery">
+                  <option value="Stationery Tools">Stationery Tools & Supplies</option>
+                </optgroup>
+                <optgroup label="Other">
+                  <option value="Custom Order">Custom Order (describe below)</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="quantity">Quantity *</label>
+              <input type="number" id="quantity" placeholder="How many do you need?" min="1" required>
+            </div>
+
+            <div class="form-group">
+              <label for="orderDetails">Order Details</label>
+              <textarea id="orderDetails" placeholder="Describe your order — size, colors, text, design preferences, deadline, etc." rows="4"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-telegram" style="width: 100%; justify-content: center; padding: 16px;">
+              ✈️ Send Order via Telegram
+            </button>
+
+            <p style="text-align: center; margin-top: 15px; color: var(--text-light); font-size: 0.85rem;">
+              Or call us directly: <a href="tel:+251966637496" style="color: #28a745; font-weight: 600;">0966637496</a>
+            </p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== MAP / LOCATION ====== -->
+  <section class="section section-light">
+    <div class="container">
+      <div class="section-header">
+        <h2>Find Us in Ambo</h2>
+        <p>We are located near Ambo University Main Campus. Visit our shop for all your printing and stationery needs!</p>
+        <div class="underline"></div>
+      </div>
+
+      <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: var(--radius); height: 300px; display: flex; align-items: center; justify-content: center; color: #fff; text-align: center; padding: 40px;">
+        <div>
+          <div style="font-size: 4rem; margin-bottom: 15px;">📍</div>
+          <h3 style="font-size: 1.5rem; margin-bottom: 10px;">Nova Advert</h3>
+          <p style="font-size: 1.1rem; color: rgba(255,255,255,0.85);">Ambo, Ethiopia</p>
+          <p style="color: rgba(255,255,255,0.7);">Near Ambo University Main Campus</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>Nova <span>Advert</span></h3>
+          <p>Your trusted partner for professional printing, advertising, and stationery services in Ambo. Quality you can count on.</p>
+          <div class="footer-social">
+            <a href="https://t.me/novaprintambo" target="_blank" title="Telegram">✈️</a>
+            <a href="tel:+251966637496" title="Phone">📞</a>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="contact.html">Contact & Order</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contact">
+          <h4>Contact Info</h4>
+          <p>📞 0966637496</p>
+          <p>✈️ @novaprintambo</p>
+          <p>📍 Ambo, near Ambo University Main Campus</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nova Advert. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
